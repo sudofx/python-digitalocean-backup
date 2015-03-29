@@ -12,7 +12,7 @@ python-digitalocean-backup is a python package that works with python-digitaloce
 ```python
 from digitaloceanbackup import *
 
-token = "YOUR_TOKEN"
+token          = "YOUR_TOKEN"
 rsync_excludes = ["cache", "terminfo"]
 remote_dirs    = ["/var/log", "/var/www"]
 
@@ -27,7 +27,6 @@ for droplet in manager.droplets:
         snapshot_hour       = 3,                 #hour of day to snapshot
         keep_snapshots      = 7                  #keep this many snapshots
     )
-
-    print("backup finished")
-    print(backup.success)
+    if backup.success:
+        print("%s backup finished" % droplet.name)
 ```
