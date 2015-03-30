@@ -19,7 +19,7 @@ setup(
     description='digitalocean.com droplet rsync and snapshot',
     author='Rob Johnson ( http://corndogcomputers.com )',
     author_email='info@corndogcomputers.com',
-    packages=['backdroplet'],
+    packages=['digitaloceanbackup'],
     install_requires=['python-digitalocean'],
     long_description=long_description
 )
