@@ -9,7 +9,7 @@ python-digitalocean-backup is a python package that works with python-digitaloce
 
 ```python
 import digitalocean
-from digitaloceanbackup import *
+import digitaloceanbackup
 
 token          = "YOUR_TOKEN"
 rsync_excludes = ["cache", "terminfo"]
