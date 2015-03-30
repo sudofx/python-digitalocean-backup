@@ -1,8 +1,6 @@
 #python-digitalocean-backup
 ##
 
-######COMING SOON
-
 python-digitalocean-backup is a python package that works with python-digitalocean to backup your droplets.
 
 ## How to install
@@ -10,6 +8,7 @@ python-digitalocean-backup is a python package that works with python-digitaloce
     python setup.py install
 
 ```python
+import digitalocean
 from digitaloceanbackup import *
 
 token          = "YOUR_TOKEN"
@@ -18,7 +17,7 @@ remote_dirs    = ["/var/log", "/var/www"]
 
 manager = digitalocean.Manager(token=token)
 for droplet in manager.droplets:
-    backup = Backup(
+    backup = digitaloceanbackup.Backup(
         droplet             = droplet,           #pass in a droplet obj
         ssh_user            = "root",            #ssh user
         ssh_key             = "droplet_ssh_key", #ssh key path/filename
