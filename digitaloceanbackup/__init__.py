@@ -238,12 +238,11 @@ class Backup(object):
         complete = False
         if len(self.remote_dirs):
             """Check the droplet status and power it on if not 'active'."""
-            droplet_on = (self.droplet.status != "active")
-            if droplet_on == False:
-                droplet_on = self.droplet.power_on(return_dict=False).wait(
-                                update_every_seconds=self.delay)
+            if (self.droplet.status != "active"):
+                self.droplet.power_on(return_dict=False).wait(
+                    update_every_seconds=self.delay)
             
-            if droplet_on and self.__bin_checks():
+            if self.__bin_checks():
                 rsync  = "rsync -avz --update"
                 excludes = ""
 
