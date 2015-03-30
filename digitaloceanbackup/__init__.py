@@ -6,7 +6,6 @@ import datetime
 import getpass
 import shlex
 import subprocess
-import digitalocean
 
 """Backup your Digitalocean Droplets"""
 __version__      = "0.0.1"
@@ -101,14 +100,6 @@ class Backup(object):
             if os.path.isfile(path):
                 return path
         sys.ext("could not find ssh_key: %s" % self.ssh_key)
-
-    """Check the droplet status and power it on if not 'active'."""
-    def __droplet_active(self):
-        active = True
-        if self.droplet.status != "active":
-            active = self.droplet.power_on(return_dict=False).wait(
-                            update_every_seconds=self.delay)
-        return active
 
     """Checks for ssh and rsync."""
     def __bin_checks(self):
@@ -246,7 +237,13 @@ class Backup(object):
 
         complete = False
         if len(self.remote_dirs):
-            if self.__droplet_active() and self.__bin_checks():
+            """Check the droplet status and power it on if not 'active'."""
+            droplet_on = (self.droplet.status != "active")
+            if droplet_on == False:
+                droplet_on = self.droplet.power_on(return_dict=False).wait(
+                                update_every_seconds=self.delay)
+            
+            if droplet_on and self.__bin_checks():
                 rsync  = "rsync -avz --update"
                 excludes = ""
 
