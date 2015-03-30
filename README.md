@@ -26,6 +26,7 @@ for droplet in manager.droplets:
         snapshot_hour       = 3,                 #hour of day to snapshot
         keep_snapshots      = 7                  #keep this many snapshots
     )
+    """Get a bool on completion."""
     if backup.success:
         print("%s backup finished" % droplet.name)
 ```
