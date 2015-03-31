@@ -7,7 +7,7 @@ except ImportError:
     use_setuptools()
     from setuptools import setup
 
-long_description = """A python package that works with python-digitalocean to rsync and snapshot your droplets."""
+long_description = """Python module to manage Digitalocean droplet backups."""
 
 if os.path.isfile("README.md"):
     with open('README.md') as file:

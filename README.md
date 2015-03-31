@@ -1,6 +1,6 @@
 #python-digitalocean-backup
 
-python-digitalocean-backup is a python package that works with python-digitalocean to backup your droplets.
+python-digitalocean-backup is a python module that works with python-digitalocean to manage droplet backups.
 
 ##### How to install
 
