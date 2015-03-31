@@ -179,24 +179,27 @@ class Backup(object):
         snapshots = []
         self.droplet.load()
 
-        for snapshot in self.droplet.snapshots:
-            snapshot.load()
-            if ("@%s-" % self.droplet.name) in snapshot.name:
-                snapshots.append(snapshot)
+        if len(self.droplet.snapshots):
+            for snapshot in self.droplet.snapshots:
+                snapshot.load()
+                if ("@%s-" % self.droplet.name) in snapshot.name:
+                    snapshots.append(snapshot)
 
-        count = len(snapshots)
+            count = len(snapshots)
 
-        if count > 0:
-            while count != self.keep_snapshots:
-                complete = False
-                snapshot = snapshots[0].load()
-                complete = snapshot.destroy()
-                snapshots.pop(0)
-                count = len(snapshots)
+            if count > 0:
+                while count >= self.keep_snapshots:
+                    complete = False
+                    snapshot = snapshots[0].load()
+                    complete = snapshot.destroy()
+                    snapshots.pop(0)
+                    count = len(snapshots)
 
-                """Log the snapshot name and complete result."""
-                self.__log("DROPLET_SNAPSHOT_DELETE: _%s_ %s" % (
-                    snapshot.name, complete))
+                    """Log the snapshot name and complete result."""
+                    self.__log("DROPLET_SNAPSHOT_DELETE: _%s_ %s" % (
+                        snapshot.name, complete))
+            else:
+                complete = True
         else:
             complete = True
 
