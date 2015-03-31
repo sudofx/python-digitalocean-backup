@@ -8,7 +8,7 @@ import shlex
 import subprocess
 
 """Backup your Digitalocean Droplets"""
-__version__ = "0.0.1"
+__version__ = "1.0.0"
 __author__ = "Rob Johnson ( http://corndogcomputers.com )"
 __author_email__ = "info@corndogcomputers.com"
 __license__ = "The MIT License (MIT)"
