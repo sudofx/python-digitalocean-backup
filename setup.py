@@ -20,6 +20,6 @@ setup(
     author='Rob Johnson ( http://corndogcomputers.com )',
     author_email='info@corndogcomputers.com',
     packages=['digitaloceanbackup'],
-    install_requires=['python-digitalocean'],
+    install_requires=['python-digitalocean>=1.5'],
     long_description=long_description
 )
