@@ -39,7 +39,6 @@ class Backup(object):
         self.ssh_key = ""
         self.remote_dirs = []
         self.rsync_excludes = []
-        self.log = []
         self.freshlog = False
         self.use_ip = False
         self.user = getpass.getuser()
@@ -84,7 +83,7 @@ class Backup(object):
         else:
             sys.exit("No droplet specified for backup...\n")
 
-    """Add entry to self.log."""
+    """Add entry to self.logfile."""
 
     def __log(self, msg):
         timestamp = "#####[%s]" % (
@@ -93,7 +92,16 @@ class Backup(object):
                 )
         )
         msg = "%s %s\n" % (timestamp, msg)
-        self.log.append(msg)
+
+        """Write to self.logfile."""
+        if self.freshlog == True:
+            logfile = open(self.logfile, 'w')
+            self.freshlog = False
+        else:
+            logfile = open(self.logfile, 'a')
+
+        logfile.writelines(msg)
+        logfile.close()
 
     """Try to loacate and return the full ssh_key path."""
 
@@ -301,16 +309,6 @@ class Backup(object):
         self.__log("DROPLET_BACKUP_FINISHED")
         self.__log(
             "**====================================================**\n\n")
-
-        """Write self.log to self.logfile."""
-        if self.freshlog == True:
-            log = open(self.logfile, 'w')
-            self.freshlog = False
-        else:
-            log = open(self.logfile, 'a')
-        for entry in self.log:
-            log.writelines(entry)
-        log.close()
 
         return complete
 
