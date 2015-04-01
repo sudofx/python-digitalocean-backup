@@ -15,7 +15,7 @@ Python module that works with python-digitalocean to manage droplet backups.
 
 ```python
 import digitalocean
-import digitaloceanbackup
+from digitaloceanbackup import Backup
 
 token = "YOUR_TOKEN"
 rsync_excludes = ["cache", ".DS_Store", "man3", "terminfo"]
