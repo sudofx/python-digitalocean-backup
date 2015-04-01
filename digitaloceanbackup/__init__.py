@@ -187,8 +187,10 @@ class Backup(object):
         snapshots = []
         self.droplet.load()
 
-        if len(self.droplet.snapshots):
-            for snapshot in self.droplet.snapshots:
+        droplet_snapshots = self.droplet.get_snapshots()
+
+        if len(droplet_snapshots):
+            for snapshot in droplet_snapshots:
                 snapshot.load()
                 if ("@%s-" % self.droplet.name) in snapshot.name:
                     snapshots.append(snapshot)
@@ -196,7 +198,7 @@ class Backup(object):
             count = len(snapshots)
 
             if count > 0:
-                while count >= self.keep_snapshots:
+                while count > self.keep_snapshots:
                     complete = False
                     snapshot = snapshots[0].load()
                     complete = snapshot.destroy()
@@ -311,15 +313,3 @@ class Backup(object):
             "**====================================================**\n\n")
 
         return complete
-
-    """self.success property getter.(runs __rsync when accessed)"""
-    @property
-    def success(self):
-        if self._success == None:
-            self._success = self.__rsync()
-        return self._success
-
-    """self.success property setter."""
-    @success.setter
-    def success(self, value):
-        self._success = value
