@@ -19,11 +19,11 @@ remote_dirs = ["/root", "/home", "/etc", "/usr/local", "/usr/share",
                "/var/backups", "/var/mail", "/var/log", "/var/www"]
 
 manager = digitalocean.Manager(token=token)
-for droplet in manager.droplets:
-    backup = digitaloceanbackup.Backup(
+for droplet in manager.get_all_droplets():
+    digitaloceanbackup.Backup(
         droplet=droplet,  # pass in a droplet obj
         ssh_user="root",  # ssh user
-        ssh_key="your_ssh_key",  # ssh key file name or full path
+        ssh_key="droplet_ssh_key",  # ssh key file name or full path
         remote_dirs=remote_dirs,  # remote directories to rsync
         rsync_excludes=rsync_excludes,  # rsync excludes
         snapshot_hour=3,  # hour of day to take snapshot
