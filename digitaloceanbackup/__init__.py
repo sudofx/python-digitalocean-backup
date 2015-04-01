@@ -30,8 +30,6 @@ class Backup(object):
         delay: int - api delay between calls
     """
 
-    """Init to win it."""
-
     def __init__(self, *args, **kwargs):
         self.success = None
         self.delay = 5
