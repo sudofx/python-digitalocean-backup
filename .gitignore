@@ -18,6 +18,10 @@ develop-eggs
 lib
 lib64
 
-dev.py
+# Installer logs
+pip-log.txt
+
 *.sublime-project
 *.sublime-workspace
+.virtualenvs
+testing.py
