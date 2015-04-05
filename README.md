@@ -1,7 +1,4 @@
-##### Requires:
-[python-digitalocean>=1.5](https://github.com/koalalorenzo/python-digitalocean)
-
-##### How to install:
+## How to install:
 
 via pip
 
@@ -12,7 +9,7 @@ via source
     python setup.py install
 
 
-##### Example:
+##### Example backup script (backup.py):
 
 ```python
 import digitalocean
@@ -35,27 +32,10 @@ for droplet in manager.get_all_droplets():
     )
 ```
 
+##### cron job:
+```sh
+0 * * * * /usr/bin/python /Users/username/bin/backup.py
+```
 
-# Example Log: [markdown]
-
-#####[2015-04-01-0927] PYTHON_VERSION: _3.4.3_
-#####[2015-04-01-0927] DROPLET_CONNECTION_ROUTE: _svr.example.com_
-#####[2015-04-01-0927] _syncing /home..._ 
-* sent 85 bytes  received 1269795 bytes  282195.56 bytes/sec
-* total size is 2891288481  speedup is 2276.82
-
-#####[2015-04-01-0928] _syncing /var/log..._ 
-* auth.log
-* nginx/access.log
-* upstart/systemd-logind.log
-* sent 20557 bytes  received 8123 bytes  11472.00 bytes/sec
-* total size is 122684370  speedup is 4277.70
-
-#####[2015-04-01-0928] _syncing /var/www..._ 
-* sent 85 bytes  received 1525 bytes  1073.33 bytes/sec
-* total size is 1025218  speedup is 636.78
-
-#####[2015-04-01-0928] DROPLET_BACKUP_FINISHED
-#####[2015-04-01-0928] **====================================================**
-
-
+###### Requires:
+[python-digitalocean>=1.5](https://github.com/koalalorenzo/python-digitalocean)
