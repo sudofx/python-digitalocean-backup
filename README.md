@@ -32,7 +32,7 @@ for droplet in manager.get_all_droplets():
     )
 ```
 
-##### cron job:
+##### Example hourly cron job:
 ```sh
 0 * * * * /usr/bin/python /Users/username/bin/backup.py
 ```
