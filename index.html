@@ -12,29 +12,28 @@
   <body>
     <section class="page-header">
       <h1 class="project-name">Python-digitalocean-backup</h1>
-      <h2 class="project-tagline">Python module to manage Digitalocean droplet backups</h2>
+      <h2 class="project-tagline">Python module that works with python-digitalocean to manage droplet backups.</h2>
       <a href="https://github.com/corndogcomputers/python-digitalocean-backup" class="btn">View on GitHub</a>
       <a href="https://github.com/corndogcomputers/python-digitalocean-backup/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/corndogcomputers/python-digitalocean-backup/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
-      <h5>
-<a id="requires" class="anchor" href="#requires" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requires:</h5>
+      <h2>
+<a id="how-to-install" class="anchor" href="#how-to-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to install:</h2>
 
-<p><a href="https://github.com/koalalorenzo/python-digitalocean">python-digitalocean&gt;=1.5</a></p>
+<p>via pip</p>
 
-<pre><code>pip install -U python-digitalocean
+<pre><code>pip install -U python-digitalocean-backup
 </code></pre>
 
-<h5>
-<a id="how-to-install" class="anchor" href="#how-to-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to install:</h5>
+<p>via source</p>
 
 <pre><code>python setup.py install
 </code></pre>
 
 <h5>
-<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example:</h5>
+<a id="example-backup-script-backuppy" class="anchor" href="#example-backup-script-backuppy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example backup script (backup.py):</h5>
 
 <div class="highlight highlight-python"><pre><span class="pl-k">import</span> digitalocean
 <span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> Backup
@@ -55,53 +54,15 @@ manager <span class="pl-k">=</span> digitalocean.Manager(<span class="pl-smi">to
         <span class="pl-smi">keep_snapshots</span><span class="pl-k">=</span><span class="pl-c1">7</span>  <span class="pl-c"># keep this many snapshots</span>
     )</pre></div>
 
-<h1>
-<a id="example-log-markdown" class="anchor" href="#example-log-markdown" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Log: [markdown]</h1>
-
 <h5>
-<a id="2015-04-01-0927-python_version-343" class="anchor" href="#2015-04-01-0927-python_version-343" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2015-04-01-0927] PYTHON_VERSION: <em>3.4.3</em>
-</h5>
+<a id="example-hourly-cron-job" class="anchor" href="#example-hourly-cron-job" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example hourly cron job:</h5>
 
-<h5>
-<a id="2015-04-01-0927-droplet_connection_route-svrexamplecom" class="anchor" href="#2015-04-01-0927-droplet_connection_route-svrexamplecom" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2015-04-01-0927] DROPLET_CONNECTION_ROUTE: <em>svr.example.com</em>
-</h5>
+<div class="highlight highlight-sh"><pre>0 <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> /usr/bin/python /Users/username/bin/backup.py</pre></div>
 
-<h5>
-<a id="2015-04-01-0927-syncing-home" class="anchor" href="#2015-04-01-0927-syncing-home" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2015-04-01-0927] <em>syncing /home...</em>
-</h5>
+<h6>
+<a id="requires" class="anchor" href="#requires" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requires:</h6>
 
-<ul>
-<li>sent 85 bytes  received 1269795 bytes  282195.56 bytes/sec</li>
-<li>total size is 2891288481  speedup is 2276.82</li>
-</ul>
-
-<h5>
-<a id="2015-04-01-0928-syncing-varlog" class="anchor" href="#2015-04-01-0928-syncing-varlog" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2015-04-01-0928] <em>syncing /var/log...</em>
-</h5>
-
-<ul>
-<li>auth.log</li>
-<li>nginx/access.log</li>
-<li>upstart/systemd-logind.log</li>
-<li>sent 20557 bytes  received 8123 bytes  11472.00 bytes/sec</li>
-<li>total size is 122684370  speedup is 4277.70</li>
-</ul>
-
-<h5>
-<a id="2015-04-01-0928-syncing-varwww" class="anchor" href="#2015-04-01-0928-syncing-varwww" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2015-04-01-0928] <em>syncing /var/www...</em>
-</h5>
-
-<ul>
-<li>sent 85 bytes  received 1525 bytes  1073.33 bytes/sec</li>
-<li>total size is 1025218  speedup is 636.78</li>
-</ul>
-
-<h5>
-<a id="2015-04-01-0928-droplet_backup_finished" class="anchor" href="#2015-04-01-0928-droplet_backup_finished" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2015-04-01-0928] DROPLET_BACKUP_FINISHED</h5>
-
-<h5>
-<a id="2015-04-01-0928-" class="anchor" href="#2015-04-01-0928-" aria-hidden="true"><span class="octicon octicon-link"></span></a>[2015-04-01-0928] <strong>====================================================</strong>
-</h5>
+<p><a href="https://github.com/koalalorenzo/python-digitalocean">python-digitalocean&gt;=1.5</a></p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/corndogcomputers/python-digitalocean-backup">Python-digitalocean-backup</a> is maintained by <a href="https://github.com/corndogcomputers">corndogcomputers</a>.</span>
