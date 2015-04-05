@@ -9,7 +9,14 @@ Python module that works with python-digitalocean to manage droplet backups.
 
 ##### How to install:
 
+via pip
+
+    pip install -U python-digitalocean-backup
+
+via source
+
     python setup.py install
+
 
 ##### Example:
 

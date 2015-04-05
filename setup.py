@@ -29,5 +29,6 @@ setup(
     download_url="https://github.com/corndogcomputers/python-digitalocean-backup/tarball/master",
     keywords=["digitalocean", "backup", "vps", "rsync", "api", "snapshot"],
     license=license,
+    platform='posix',
     long_description=long_description
 )
