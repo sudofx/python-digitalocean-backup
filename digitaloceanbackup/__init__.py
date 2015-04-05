@@ -1,4 +1,4 @@
-"""Tested with Python 2.7.6 & Python 3.4.3"""
+"""Tested with Python 2.7 & Python 3.4"""
 import os
 import sys
 import time
@@ -8,7 +8,7 @@ import shlex
 import subprocess
 
 """Backup your Digitalocean Droplets"""
-__version__ = "1.0.0"
+__version__ = "1.0"
 __author__ = "Rob Johnson ( http://corndogcomputers.com )"
 __author_email__ = "info@corndogcomputers.com"
 __license__ = "The MIT License (MIT)"

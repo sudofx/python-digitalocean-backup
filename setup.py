@@ -13,13 +13,21 @@ if os.path.isfile("README.md"):
     with open('README.md') as file:
         long_description = file.read()
 
+if os.path.isfile("LICENSE.txt"):
+    with open("LICENSE.txt") as file:
+        license = file.read()
+
 setup(
     name='python-digitalocean-backup',
-    version='0.0.1',
+    version='1.0',
     description='digitalocean.com droplet rsync and snapshot',
     author='Rob Johnson ( http://corndogcomputers.com )',
     author_email='info@corndogcomputers.com',
+    url="https://github.com/corndogcomputers/python-digitalocean-backup",
     packages=['digitaloceanbackup'],
     install_requires=['python-digitalocean>=1.5'],
+    download_url="https://github.com/corndogcomputers/python-digitalocean-backup/tarball/master",
+    keywords=["digitalocean", "backup", "vps", "rsync", "api", "snapshot"],
+    license=license,
     long_description=long_description
 )

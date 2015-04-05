@@ -1,11 +1,13 @@
 *.py[cod]
-
-# C extensions
 *.so
-
-# Packages
 *.egg
 *.egg-info
+*.sublime-project
+*.sublime-workspace
+.installed.cfg
+.project
+.pydevproject
+.virtualenvs
 dist
 build
 eggs
@@ -14,14 +16,9 @@ bin
 var
 sdist
 develop-eggs
-.installed.cfg
 lib
 lib64
-
-# Installer logs
 pip-log.txt
-
-*.sublime-project
-*.sublime-workspace
-.virtualenvs
 testing.py
+setup.cfg
+notes.txt
