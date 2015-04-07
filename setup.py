@@ -19,7 +19,7 @@ if os.path.isfile("LICENSE.txt"):
 
 setup(
     name='python-digitalocean-backup',
-    version='1.0',
+    version='1.0.1',
     description='digitalocean.com droplet rsync and snapshot',
     author='Rob Johnson ( http://corndogcomputers.com )',
     author_email='info@corndogcomputers.com',
