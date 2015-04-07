@@ -2,6 +2,10 @@
 
 This module works with [python-digitalocean](https://github.com/koalalorenzo/python-digitalocean) to allow you to rsync and snapshot your droplets with ease. **Great for hourly cron jobs!**
 
+###### Works with posix (*nix, osx, cygwin)
+    Tested with Python 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)
+
+
 ## How to install:
 
 via pip

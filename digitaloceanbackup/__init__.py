@@ -1,4 +1,4 @@
-"""Tested with Python 2.7 & Python 3.4"""
+"""Tested with Python 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)"""
 import os
 import sys
 import time
@@ -8,7 +8,7 @@ import shlex
 import subprocess
 
 """Backup your Digitalocean Droplets"""
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 __author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
 __license__ = 'The MIT License (MIT)'
@@ -45,7 +45,7 @@ class Backup(object):
         self.snapshot_hour = 25
         self.keep_snapshots = 0
 
-        """Currently no support for Windows."""
+        """Currently no support for Windows without CYGWIN"""
         if os.name != 'posix':
             sys.exit('Currently only supports POSIX OS.')
 
@@ -277,10 +277,16 @@ class Backup(object):
                         complete = False
                         params = '-e "ssh -oStrictHostKeyChecking=no -i %s"' % self.ssh_key
                         """This is the actual rsync command being sent."""
-                        process = '%s %s %s %s@%s:%s/ %s%s' % (rsync, excludes,
-                                                               params, self.ssh_user, self.droplet.name, remote_dir,
-                                                               self.backup_dir, remote_dir
-                                                               )
+                        process = '%s %s %s %s@%s:%s/ %s%s' % (
+                            rsync,
+                            excludes,
+                            params,
+                            self.ssh_user,
+                            self.droplet.name,
+                            remote_dir,
+                            self.backup_dir,
+                            remote_dir
+                        )
 
                         output = self.__run_process(process)
 
