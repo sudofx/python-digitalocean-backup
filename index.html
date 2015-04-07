@@ -20,6 +20,17 @@
 
     <section class="main-content">
       <h2>
+<a id="synopsis" class="anchor" href="#synopsis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Synopsis:</h2>
+
+<p>This module works with <a href="https://github.com/koalalorenzo/python-digitalocean">python-digitalocean</a> to allow you to rsync and snapshot your droplets with ease. <strong>Great for hourly cron jobs!</strong></p>
+
+<h6>
+<a id="works-with-posix-nix-osx-cygwin" class="anchor" href="#works-with-posix-nix-osx-cygwin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Works with posix (*nix, osx, cygwin)</h6>
+
+<pre><code>Tested with Python 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)
+</code></pre>
+
+<h2>
 <a id="how-to-install" class="anchor" href="#how-to-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to install:</h2>
 
 <p>via pip</p>
@@ -36,18 +47,18 @@
 <a id="example-backup-script-backuppy" class="anchor" href="#example-backup-script-backuppy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example backup script (backup.py):</h5>
 
 <div class="highlight highlight-python"><pre><span class="pl-k">import</span> digitalocean
-<span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> Backup
+<span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> backup
 
-token <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>YOUR_TOKEN<span class="pl-pds">"</span></span>
-rsync_excludes <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">"</span>cache<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>.DS_Store<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>man3<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>terminfo<span class="pl-pds">"</span></span>]
-remote_dirs <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">"</span>/home<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/var/log<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/var/www<span class="pl-pds">"</span></span>]
+token <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>YOUR_TOKEN<span class="pl-pds">'</span></span>
+rsync_excludes <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>cache<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>.DS_Store<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>man3<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>terminfo<span class="pl-pds">'</span></span>]
+remote_dirs <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>/var/log<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>/var/www<span class="pl-pds">'</span></span>]
 
 manager <span class="pl-k">=</span> digitalocean.Manager(<span class="pl-smi">token</span><span class="pl-k">=</span>token)
 <span class="pl-k">for</span> droplet <span class="pl-k">in</span> manager.get_all_droplets():
-    Backup(
+    backup(
         <span class="pl-smi">droplet</span><span class="pl-k">=</span>droplet,  <span class="pl-c"># pass in a droplet obj</span>
-        <span class="pl-smi">ssh_user</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>droplet_ssh_user<span class="pl-pds">"</span></span>,  <span class="pl-c"># ssh user</span>
-        <span class="pl-smi">ssh_key</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>droplet_ssh_key<span class="pl-pds">"</span></span>,  <span class="pl-c"># ssh key file name or full path</span>
+        <span class="pl-smi">ssh_user</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>droplet_ssh_user<span class="pl-pds">'</span></span>,  <span class="pl-c"># ssh user</span>
+        <span class="pl-smi">ssh_key</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>droplet_ssh_key<span class="pl-pds">'</span></span>,  <span class="pl-c"># ssh key file name or full path</span>
         <span class="pl-smi">remote_dirs</span><span class="pl-k">=</span>remote_dirs,  <span class="pl-c"># remote directories to rsync</span>
         <span class="pl-smi">rsync_excludes</span><span class="pl-k">=</span>rsync_excludes,  <span class="pl-c"># rsync excludes</span>
         <span class="pl-smi">snapshot_hour</span><span class="pl-k">=</span><span class="pl-c1">3</span>,  <span class="pl-c"># hour of day to take snapshot</span>
