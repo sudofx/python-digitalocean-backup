@@ -7,7 +7,8 @@ except ImportError:
     use_setuptools()
     from setuptools import setup
 
-long_description = """Python module to manage Digitalocean droplet backups."""
+description = 'Python module to manage Digitalocean droplet backups.'
+long_description = description
 
 if os.path.isfile("README.md"):
     with open('README.md') as file:
@@ -20,7 +21,7 @@ if os.path.isfile("LICENSE.txt"):
 setup(
     name='python-digitalocean-backup',
     version='1.0.2',
-    description='digitalocean.com droplet rsync and snapshot',
+    description=description,
     author='Rob Johnson ( http://corndogcomputers.com )',
     author_email='info@corndogcomputers.com',
     url="https://github.com/corndogcomputers/python-digitalocean-backup",
