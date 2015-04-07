@@ -9,7 +9,7 @@ import subprocess
 
 """Backup your Digitalocean Droplets"""
 __version__ = '1.0.1'
-__author__ = 'Rob Johnson ( http://corndogcomputers.com )'
+__author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
 __license__ = 'The MIT License (MIT)'
 __copyright__ = 'Copyright (c) 2015 Rob Johnson'
@@ -65,7 +65,7 @@ class Backup(object):
 
             """Set the default backup_dir to $HOME/Droplets/droplet.name."""
             if self.droplet.name not in self.backup_dir:
-                self.backup_dir = "%s/%s" % (
+                self.backup_dir = '%s/%s' % (
                     self.backup_dir, self.droplet.name)
 
             """Create the backup_dir if it doesn't exist."""
@@ -76,7 +76,7 @@ class Backup(object):
             self.ssh_key = self.__find_ssh_key()
 
             """Set the log file name."""
-            self.logfile = "%s/%s" % (self.backup_dir, '_backup_log.md')
+            self.logfile = '%s/%s' % (self.backup_dir, '_backup_log.md')
             self.success = self.__rsync()
         else:
             sys.exit('No droplet specified for backup...\n')
