@@ -47,7 +47,7 @@ class Backup(object):
 
         """Currently no support for Windows without CYGWIN"""
         if os.name != 'posix':
-            sys.exit('Currently only supports POSIX OS.')
+            sys.exit('Currently only supports POSIX platform.')
 
         """Set attributes from args."""
         self.__dict__.update(kwargs)
@@ -79,7 +79,7 @@ class Backup(object):
             self.logfile = '%s/%s' % (self.backup_dir, '_backup_log.md')
             self.success = self.__rsync()
         else:
-            sys.exit('No droplet specified for backup...\n')
+            sys.exit('No droplet specified for backup.\n')
 
     """Add entry to self.logfile."""
 
