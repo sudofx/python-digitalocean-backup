@@ -8,7 +8,7 @@ import shlex
 import subprocess
 
 """Backup your Digitalocean Droplets"""
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 __author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
 __license__ = 'The MIT License (MIT)'
@@ -39,6 +39,7 @@ class Backup(object):
         self.rsync_excludes = []
         self.freshlog = False
         self.use_ip = False
+        self.debug = False
         self.user = getpass.getuser()
         self.home = os.path.expanduser('~')
         self.backup_dir = '%s/Droplets' % self.home
@@ -109,7 +110,11 @@ class Backup(object):
         ssh_path = '%s/.ssh/%s' % (self.home, self.ssh_key)
         paths = [self.ssh_key, this_path, home_path, ssh_path]
         for path in paths:
+            if self.debug == True:
+                print('looking for ssh_key in ' + path)
             if os.path.isfile(path):
+                if self.debug == True:
+                    print('found ssh_key ' + path)
                 return path
         sys.exit('could not find ssh_key: %s' % self.ssh_key)
 
@@ -164,6 +169,8 @@ class Backup(object):
     """Run shell commands on droplet."""
 
     def __run_process(self, process):
+        if self.debug == True:
+            print(process)
         try:
             output = subprocess.Popen(
                 shlex.split(process),

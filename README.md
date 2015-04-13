@@ -24,12 +24,13 @@ import digitalocean
 from digitaloceanbackup import backup
 
 token = 'YOUR_TOKEN'
-rsync_excludes = ['cache', '.DS_Store', 'man3', 'terminfo']
+rsync_excludes = ['cache', '.DS_Store', 'man3']
 remote_dirs = ['/home', '/var/log', '/var/www']
 
 manager = digitalocean.Manager(token=token)
 for droplet in manager.get_all_droplets():
     backup(
+        debug=False,  # print debug info so you can see shell commands
         droplet=droplet,  # pass in a droplet obj
         ssh_user='droplet_ssh_user',  # ssh user
         ssh_key='droplet_ssh_key',  # ssh key file name or full path
