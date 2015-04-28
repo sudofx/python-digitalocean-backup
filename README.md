@@ -17,11 +17,22 @@ via source
     python setup.py install
 
 
+##### PyPI package
+[https://pypi.python.org/pypi/python-digitalocean-backup](https://pypi.python.org/pypi/python-digitalocean-backup)
+
 ##### Example backup script (backup.py):
 
 ```python
 import digitalocean
 from digitaloceanbackup import backup
+
+"""Uncomment to disable logging for InsecurePlatformWarning"""
+"""
+import sys
+if sys.version_info[:3] < (2, 7, 9):
+    import logging
+    logging.captureWarnings(True)
+"""
 
 token = 'YOUR_TOKEN'
 rsync_excludes = ['cache', '.DS_Store', 'man3']

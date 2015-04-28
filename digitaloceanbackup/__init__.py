@@ -1,4 +1,4 @@
-"""Tested with Python 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)"""
+"""Tested with Python 2.7.6 (OS X), 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)"""
 import os
 import sys
 import time
@@ -6,9 +6,10 @@ import datetime
 import getpass
 import shlex
 import subprocess
+import logging
 
 """Backup your Digitalocean Droplets"""
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 __author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
 __license__ = 'The MIT License (MIT)'
@@ -45,6 +46,7 @@ class Backup(object):
         self.backup_dir = '%s/Droplets' % self.home
         self.snapshot_hour = 25
         self.keep_snapshots = 0
+        self.debug = False
 
         """Currently no support for Windows without CYGWIN"""
         if os.name != 'posix':
@@ -52,6 +54,14 @@ class Backup(object):
 
         """Set attributes from args."""
         self.__dict__.update(kwargs)
+
+        """Setup logger."""
+        logging.captureWarnings(True)
+        if self.debug == True:
+            logging.basicConfig(level=logging.DEBUG)
+        else:
+            logging.basicConfig(level=logging.ERROR)
+        self.logger = logging.getLogger(__name__)
 
         """Let's check to make sure a droplet was passed in."""
         if hasattr(self, 'droplet') == True:
@@ -110,11 +120,9 @@ class Backup(object):
         ssh_path = '%s/.ssh/%s' % (self.home, self.ssh_key)
         paths = [self.ssh_key, this_path, home_path, ssh_path]
         for path in paths:
-            if self.debug == True:
-                print('looking for ssh_key in ' + path)
+            self.logger.debug('LOOKING FOR ssh_key in ' + path)
             if os.path.isfile(path):
-                if self.debug == True:
-                    print('found ssh_key ' + path)
+                self.logger.debug('FOUND ssh_key ' + path)
                 return path
         sys.exit('could not find ssh_key: %s' % self.ssh_key)
 
@@ -169,8 +177,7 @@ class Backup(object):
     """Run shell commands on droplet."""
 
     def __run_process(self, process):
-        if self.debug == True:
-            print(process)
+        self.logger.debug(process)
         try:
             output = subprocess.Popen(
                 shlex.split(process),
@@ -182,7 +189,7 @@ class Backup(object):
         except subprocess.CalledProcessError as grepexc:
             status = grepexc.returncode
             output = grepexc.output
-            print(status, output)
+            self.logger.ERROR(status, output)
         return output
 
     """This will delete old snapshots created by this backup."""
