@@ -44,10 +44,23 @@
 </code></pre>
 
 <h5>
+<a id="pypi-package" class="anchor" href="#pypi-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>PyPI package</h5>
+
+<p><a href="https://pypi.python.org/pypi/python-digitalocean-backup">https://pypi.python.org/pypi/python-digitalocean-backup</a></p>
+
+<h5>
 <a id="example-backup-script-backuppy" class="anchor" href="#example-backup-script-backuppy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example backup script (backup.py):</h5>
 
 <div class="highlight highlight-python"><pre><span class="pl-k">import</span> digitalocean
 <span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> backup
+
+<span class="pl-s"><span class="pl-pds">"""</span>Uncomment to disable logging for InsecurePlatformWarning<span class="pl-pds">"""</span></span>
+<span class="pl-s"><span class="pl-pds">"""</span></span>
+<span class="pl-s">import sys</span>
+<span class="pl-s">if sys.version_info[:3] &lt; (2, 7, 9):</span>
+<span class="pl-s">    import logging</span>
+<span class="pl-s">    logging.captureWarnings(True)</span>
+<span class="pl-s"><span class="pl-pds">"""</span></span>
 
 token <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>YOUR_TOKEN<span class="pl-pds">'</span></span>
 rsync_excludes <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>cache<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>.DS_Store<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>man3<span class="pl-pds">'</span></span>]
