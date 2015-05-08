@@ -32,21 +32,20 @@ class Backup(object):
     """
 
     def __init__(self, *args, **kwargs):
-        self.success = None
-        self.delay = 5
-        self.ssh_user = ''
-        self.ssh_key = ''
-        self.remote_dirs = []
-        self.rsync_excludes = []
-        self.freshlog = False
-        self.use_ip = False
-        self.debug = False
-        self.user = getpass.getuser()
-        self.home = os.path.expanduser('~')
-        self.backup_dir = '%s/Droplets' % self.home
-        self.snapshot_hour = 25
-        self.keep_snapshots = 0
-        self.debug = False
+        self.success = None  # completion bool
+        self.delay = 5  # delay between api calls
+        self.ssh_user = ''  # ssh user name
+        self.ssh_key = ''  # ssh key
+        self.remote_dirs = []  # droplet directories to rsync
+        self.rsync_excludes = []  # excludes for rsync
+        self.freshlog = False  # start a new log if true
+        self.use_ip = False  # use ip instead of droplet name for ssh
+        self.user = getpass.getuser()  # local system username
+        self.home = os.path.expanduser('~')  # local system home path
+        self.backup_dir = '%s/Droplets' % self.home  # backup dir
+        self.snapshot_hour = 25  # hour of day to take snapshot
+        self.keep_snapshots = 0  # number of snapshots to keep
+        self.debug = False  # debug flag
 
         """Currently no support for Windows without CYGWIN"""
         if os.name != 'posix':
@@ -55,7 +54,7 @@ class Backup(object):
         """Set attributes from args."""
         self.__dict__.update(kwargs)
 
-        """Setup logger."""
+        """Setup logger. (not for markdown logfile)"""
         logging.captureWarnings(True)
         if self.debug == True:
             logging.basicConfig(level=logging.DEBUG)
