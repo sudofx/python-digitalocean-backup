@@ -52,7 +52,7 @@
 <a id="example-backup-script-backuppy" class="anchor" href="#example-backup-script-backuppy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example backup script (backup.py):</h5>
 
 <div class="highlight highlight-python"><pre><span class="pl-k">import</span> digitalocean
-<span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> backup
+<span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> Backup
 
 <span class="pl-s"><span class="pl-pds">"""</span>Uncomment to disable logging for InsecurePlatformWarning<span class="pl-pds">"""</span></span>
 <span class="pl-s"><span class="pl-pds">"""</span></span>
@@ -68,7 +68,7 @@ remote_dirs <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds"
 
 manager <span class="pl-k">=</span> digitalocean.Manager(<span class="pl-smi">token</span><span class="pl-k">=</span>token)
 <span class="pl-k">for</span> droplet <span class="pl-k">in</span> manager.get_all_droplets():
-    backup(
+    Backup(
         <span class="pl-smi">debug</span><span class="pl-k">=</span><span class="pl-c1">False</span>,  <span class="pl-c"># print debug info so you can see shell commands</span>
         <span class="pl-smi">droplet</span><span class="pl-k">=</span>droplet,  <span class="pl-c"># pass in a droplet obj</span>
         <span class="pl-smi">ssh_user</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>droplet_ssh_user<span class="pl-pds">'</span></span>,  <span class="pl-c"># ssh user</span>
