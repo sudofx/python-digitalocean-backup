@@ -9,7 +9,7 @@ import subprocess
 import logging
 
 """Backup your Digitalocean Droplets"""
-__version__ = '1.0.4'
+__version__ = '1.0.6'
 __author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
 __license__ = 'The MIT License (MIT)'
@@ -239,24 +239,17 @@ class Backup(object):
             """Create a snapshot with a name like @example.com-2015-29-0300."""
             snapshot_name = '@%s-%s' % (self.droplet.name, timestamp)
 
-            off = self.droplet.status == 'off'
-            if off == False:
-                off = self.droplet.power_off(return_dict=False).wait(
-                    update_every_seconds=self.delay)
+            """Take the snapshot."""
+            complete = self.droplet.take_snapshot(snapshot_name, return_dict=False, power_off=True).wait(
+                update_every_seconds=(self.delay * 2))
 
-            if off == True:
-                """Take the snapshot."""
-                complete = self.droplet.take_snapshot(
-                    snapshot_name,
-                    return_dict=False
-                ).wait(update_every_seconds=(self.delay * 2))
+            """Log the snapshot name and complete result."""
+            self.__log('DROPLET_TAKING_SNAPSHOT: _%s_ %s' % (
+                snapshot_name, complete))
 
-                """Log the snapshot name and complete result."""
-                self.__log('DROPLET_TAKING_SNAPSHOT: _%s_ %s' % (
-                    snapshot_name, complete))
+            if self.keep_snapshots != 0:
+                complete = self.__delete_snapshots()
 
-                if self.keep_snapshots != 0:
-                    complete = self.__delete_snapshots()
         else:
             complete = True
 
@@ -289,6 +282,7 @@ class Backup(object):
                     if self.__remote_dir_check(remote_dir) == True:
                         complete = False
                         params = '-e "ssh -oStrictHostKeyChecking=no -i %s"' % self.ssh_key
+
                         """This is the actual rsync command being sent."""
                         process = '%s %s %s %s@%s:%s/ %s%s' % (
                             rsync,
