@@ -20,7 +20,7 @@ if os.path.isfile("LICENSE.txt"):
 
 setup(
     name='python-digitalocean-backup',
-    version='1.0.6',
+    version='1.0.7',
     description=description,
     author='Rob Johnson ( http://corndogcomputers.com )',
     author_email='info@corndogcomputers.com',

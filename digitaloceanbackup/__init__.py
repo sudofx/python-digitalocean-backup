@@ -9,7 +9,7 @@ import subprocess
 import logging
 
 """Backup your Digitalocean Droplets"""
-__version__ = '1.0.6'
+__version__ = '1.0.7'
 __author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
 __license__ = 'The MIT License (MIT)'
@@ -233,22 +233,31 @@ class Backup(object):
 
         """Is it time to take a snapshot?"""
         if (datetime.datetime.today().hour == self.snapshot_hour):
-            timestamp = str(datetime.datetime.fromtimestamp(
-                int(time.time())).strftime('%Y-%m-%d-%H%M'))
+            off = self.droplet.power_off(return_dict=False).wait(
+                update_every_seconds=30)
 
-            """Create a snapshot with a name like @example.com-2015-29-0300."""
-            snapshot_name = '@%s-%s' % (self.droplet.name, timestamp)
+            if off == True:
+                timestamp = str(datetime.datetime.fromtimestamp(
+                    int(time.time())).strftime('%Y-%m-%d-%H%M'))
 
-            """Take the snapshot."""
-            complete = self.droplet.take_snapshot(snapshot_name, return_dict=False, power_off=True).wait(
-                update_every_seconds=(self.delay * 2))
+                """Create a snapshot with a name like @example.com-2015-29-0300."""
+                snapshot_name = '@%s-%s' % (self.droplet.name, timestamp)
 
-            """Log the snapshot name and complete result."""
-            self.__log('DROPLET_TAKING_SNAPSHOT: _%s_ %s' % (
-                snapshot_name, complete))
+                """Take the snapshot."""
+                long_delay = self.delay * 2
+                complete = self.droplet.take_snapshot(
+                    snapshot_name,
+                    return_dict=False,
+                    power_off=False).wait(update_every_seconds=long_delay)
 
-            if self.keep_snapshots != 0:
-                complete = self.__delete_snapshots()
+                """Log the snapshot name and complete result."""
+                self.__log('DROPLET_TAKING_SNAPSHOT: _%s_ %s' % (
+                    snapshot_name, complete))
+
+                if self.keep_snapshots != 0:
+                    complete = self.__delete_snapshots()
+            else:
+                complete = True
 
         else:
             complete = True
