@@ -1,4 +1,5 @@
-# Tested with Python 2.7.6 (OS X), 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)
+# Tested with Python 2.7.6 (OS X), 2.7.8(CYGWIN), 2.7.9(OS X/Linux),
+# 3.4.3(OS X/Linux)
 import os
 import sys
 import time
@@ -18,7 +19,6 @@ __copyright__ = 'Copyright (c) 2015 Rob Johnson'
 
 class Backup(object):
 
-    
     # Attributes accepted at creation time:
     #     droplet: Droplet - droplet obj
     #     ssh_user: str - user for rsync connections when connecting to droplet
@@ -29,7 +29,6 @@ class Backup(object):
     #     keep_snapshots: int - number of backup snapshots to keep
     #     backup_dir: str - the local folder for your droplet backups
     #     delay: int - api delay between calls
-    
 
     def __init__(self, *args, **kwargs):
         self.success = None  # completion bool
@@ -96,8 +95,7 @@ class Backup(object):
     def __log(self, msg):
         timestamp = '#####[%s]' % (
             str(datetime.datetime.fromtimestamp(
-                int(time.time())).strftime('%Y-%m-%d-%H%M')
-                )
+                int(time.time())).strftime('%Y-%m-%d-%H%M'))
         )
         msg = '%s %s\n' % (timestamp, msg)
 
@@ -148,11 +146,10 @@ class Backup(object):
         ssh_cmd = 'ssh -oStrictHostKeyChecking=no -i %s' % self.ssh_key
         local_dir = '%s%s/' % (self.backup_dir, remote_dir)
 
-        
         # If the local_dir doesn't exist, let's ssh into the server and check
         # if the remote_dir exists on the server. If it does, then we'll
         # create the local_dir and then we won't need to check for it again.
-        
+
         process = '%s %s@%s [ -d %s ] && echo True || echo False' % (
             ssh_cmd, self.ssh_user, self.route, remote_dir
         )
