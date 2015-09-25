@@ -1,4 +1,4 @@
-"""Tested with Python 2.7.6 (OS X), 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)"""
+# Tested with Python 2.7.6 (OS X), 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)
 import os
 import sys
 import time
@@ -8,7 +8,7 @@ import shlex
 import subprocess
 import logging
 
-"""Backup your Digitalocean Droplets"""
+# Backup your Digitalocean Droplets
 __version__ = '1.0.7'
 __author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
@@ -18,18 +18,18 @@ __copyright__ = 'Copyright (c) 2015 Rob Johnson'
 
 class Backup(object):
 
-    """
-    Attributes accepted at creation time:
-        droplet: Droplet - droplet obj
-        ssh_user: str - user for rsync connections when connecting to droplet
-        ssh_key: str - ssh key file (full path/key_name) NO PASSWORD ACCESS
-        remote_dirs: list() - list of directories to rsync from droplet to local
-        rsync_excludes: list() - list of  rsync excludes
-        snapshot_hour: int - the hour of day to create a snapshot
-        keep_snapshots: int - number of backup snapshots to keep
-        backup_dir: str - the local folder for your droplet backups
-        delay: int - api delay between calls
-    """
+    
+    # Attributes accepted at creation time:
+    #     droplet: Droplet - droplet obj
+    #     ssh_user: str - user for rsync connections when connecting to droplet
+    #     ssh_key: str - ssh key file (full path/key_name) NO PASSWORD ACCESS
+    #     remote_dirs: list() - list of directories to rsync from droplet to local
+    #     rsync_excludes: list() - list of  rsync excludes
+    #     snapshot_hour: int - the hour of day to create a snapshot
+    #     keep_snapshots: int - number of backup snapshots to keep
+    #     backup_dir: str - the local folder for your droplet backups
+    #     delay: int - api delay between calls
+    
 
     def __init__(self, *args, **kwargs):
         self.success = None  # completion bool
@@ -47,14 +47,14 @@ class Backup(object):
         self.keep_snapshots = 0  # number of snapshots to keep
         self.debug = False  # debug flag
 
-        """Currently no support for Windows without CYGWIN"""
+        # Currently no support for Windows without CYGWIN
         if os.name != 'posix':
             sys.exit('Currently only supports POSIX platform.')
 
-        """Set attributes from args."""
+        # Set attributes from args.
         self.__dict__.update(kwargs)
 
-        """Setup logger. (not for markdown logfile)"""
+        # Setup logger. (not for markdown logfile)
         logging.captureWarnings(True)
         if self.debug == True:
             logging.basicConfig(level=logging.DEBUG)
@@ -62,36 +62,36 @@ class Backup(object):
             logging.basicConfig(level=logging.ERROR)
         self.logger = logging.getLogger(__name__)
 
-        """Let's check to make sure a droplet was passed in."""
+        # Let's check to make sure a droplet was passed in.
         if hasattr(self, 'droplet') == True:
-            """Set the prefered route (ip or droplet name)."""
+            # Set the prefered route (ip or droplet name).
             self.route = self.droplet.name
             if self.use_ip == True:
                 self.route = droplet.ip_address
 
-            """Clear the logfile and start over if this is a snapshot_hour."""
+            # Clear the logfile and start over if this is a snapshot_hour.
             self.freshlog = (
                 datetime.datetime.today().hour == self.snapshot_hour)
 
-            """Set the default backup_dir to $HOME/Droplets/droplet.name."""
+            # Set the default backup_dir to $HOME/Droplets/droplet.name.
             if self.droplet.name not in self.backup_dir:
                 self.backup_dir = '%s/%s' % (
                     self.backup_dir, self.droplet.name)
 
-            """Create the backup_dir if it doesn't exist."""
+            # Create the backup_dir if it doesn't exist.
             if not os.path.exists(self.backup_dir):
                 os.makedirs(self.backup_dir)
 
-            """Try to get and set the full ssh key path."""
+            # Try to get and set the full ssh key path.
             self.ssh_key = self.__find_ssh_key()
 
-            """Set the log file name."""
+            # Set the log file name.
             self.logfile = '%s/%s' % (self.backup_dir, '_backup_log.md')
             self.success = self.__rsync()
         else:
             sys.exit('No droplet specified for backup.\n')
 
-    """Add entry to self.logfile."""
+    # Add entry to self.logfile.
 
     def __log(self, msg):
         timestamp = '#####[%s]' % (
@@ -101,7 +101,7 @@ class Backup(object):
         )
         msg = '%s %s\n' % (timestamp, msg)
 
-        """Write to self.logfile."""
+        # Write to self.logfile.
         if self.freshlog == True:
             logfile = open(self.logfile, 'w')
             self.freshlog = False
@@ -111,7 +111,7 @@ class Backup(object):
         logfile.writelines(msg)
         logfile.close()
 
-    """Try to loacate and return the full ssh_key path."""
+    # Try to loacate and return the full ssh_key path.
 
     def __find_ssh_key(self):
         this_path = '%s/%s' % (os.getcwd(), self.ssh_key)
@@ -125,7 +125,7 @@ class Backup(object):
                 return path
         sys.exit('could not find ssh_key: %s' % self.ssh_key)
 
-    """Checks for ssh and rsync."""
+    # Checks for ssh and rsync.
 
     def __bin_checks(self):
         found = False
@@ -141,27 +141,27 @@ class Backup(object):
                     missing_bin = bin_path
         return found if (found == True) else sys.exit('%s not found' % missing_bin)
 
-    """Check for remote directories."""
+    # Check for remote directories.
 
     def __remote_dir_check(self, remote_dir):
         result = False
         ssh_cmd = 'ssh -oStrictHostKeyChecking=no -i %s' % self.ssh_key
         local_dir = '%s%s/' % (self.backup_dir, remote_dir)
 
-        """
-            If the local_dir doesn't exist, let's ssh into the server and check
-            if the remote_dir exists on the server. If it does, then we'll
-            create the local_dir and then we won't need to check for it again.
-        """
+        
+        # If the local_dir doesn't exist, let's ssh into the server and check
+        # if the remote_dir exists on the server. If it does, then we'll
+        # create the local_dir and then we won't need to check for it again.
+        
         process = '%s %s@%s [ -d %s ] && echo True || echo False' % (
             ssh_cmd, self.ssh_user, self.route, remote_dir
         )
 
-        """Create the local_dir for the remote_dir if it doesn't exits."""
+        # Create the local_dir for the remote_dir if it doesn't exits.
         if not os.path.exists(local_dir):
             output = self.__run_process(process)
             if 'True' in output:
-                """Create the local_dir if it doesn't exits."""
+                # Create the local_dir if it doesn't exits.
                 os.makedirs(local_dir)
                 self.__log('CREATING_LOCAL_DIRECTORY: _%s_' % local_dir)
                 result = True
@@ -173,7 +173,7 @@ class Backup(object):
 
         return result
 
-    """Run shell commands on droplet."""
+    # Run shell commands on droplet.
 
     def __run_process(self, process):
         self.logger.debug(process)
@@ -191,7 +191,7 @@ class Backup(object):
             self.logger.ERROR(status, output)
         return output
 
-    """This will delete old snapshots created by this backup."""
+    # This will delete old snapshots created by this backup.
 
     def __delete_snapshots(self):
         complete = False
@@ -216,7 +216,7 @@ class Backup(object):
                     snapshots.pop(0)
                     count = len(snapshots)
 
-                    """Log the snapshot name and complete result."""
+                    # Log the snapshot name and complete result.
                     self.__log('DROPLET_SNAPSHOT_DELETE: _%s_ %s' % (
                         snapshot.name, complete))
             else:
@@ -226,12 +226,12 @@ class Backup(object):
 
         return complete
 
-    """This will power off the droplet and take a snapshot."""
+    # This will power off the droplet and take a snapshot.
 
     def __take_snapshot(self):
         complete = False
 
-        """Is it time to take a snapshot?"""
+        # Is it time to take a snapshot?
         if (datetime.datetime.today().hour == self.snapshot_hour):
             off = self.droplet.power_off(return_dict=False).wait(
                 update_every_seconds=30)
@@ -240,17 +240,17 @@ class Backup(object):
                 timestamp = str(datetime.datetime.fromtimestamp(
                     int(time.time())).strftime('%Y-%m-%d-%H%M'))
 
-                """Create a snapshot with a name like @example.com-2015-29-0300."""
+                # Create a snapshot with a name like @example.com-2015-29-0300.
                 snapshot_name = '@%s-%s' % (self.droplet.name, timestamp)
 
-                """Take the snapshot."""
-                long_delay = self.delay * 2
+                # Take the snapshot.
+                double_delay = self.delay * 2
                 complete = self.droplet.take_snapshot(
                     snapshot_name,
                     return_dict=False,
-                    power_off=False).wait(update_every_seconds=long_delay)
+                    power_off=False).wait(update_every_seconds=double_delay)
 
-                """Log the snapshot name and complete result."""
+                # Log the snapshot name and complete result.
                 self.__log('DROPLET_TAKING_SNAPSHOT: _%s_ %s' % (
                     snapshot_name, complete))
 
@@ -264,18 +264,18 @@ class Backup(object):
 
         return complete
 
-    """The main rsync function."""
+    # The main rsync function.
 
     def __rsync(self):
-        """Log the Python version."""
+        # Log the Python version.
         self.__log('PYTHON_VERSION: _%s_' % sys.version.split()[0])
 
-        """Log the connection route."""
+        # Log the connection route.
         self.__log('DROPLET_CONNECTION_ROUTE: _%s_' % self.route)
 
         complete = False
         if type(self.remote_dirs) == type([]) and type(self.rsync_excludes) == type([]) and len(self.remote_dirs):
-            """Check the droplet status and power it on if not 'active'."""
+            # Check the droplet status and power it on if not 'active'.
             if (self.droplet.status != 'active'):
                 self.droplet.power_on(return_dict=False).wait(
                     update_every_seconds=self.delay)
@@ -292,7 +292,7 @@ class Backup(object):
                         complete = False
                         params = '-e "ssh -oStrictHostKeyChecking=no -i %s"' % self.ssh_key
 
-                        """This is the actual rsync command being sent."""
+                        # This is the actual rsync command being sent.
                         process = '%s %s %s %s@%s:%s/ %s%s' % (
                             rsync,
                             excludes,
@@ -306,7 +306,7 @@ class Backup(object):
 
                         output = self.__run_process(process)
 
-                        """Format the output for markdown."""
+                        # Format the output for markdown.
                         output = '%s\n' % output
                         output = output.replace('\nsent', 'sent')
                         output = output.replace(' \n', '\n')
@@ -316,7 +316,7 @@ class Backup(object):
                         output = output.replace('\n* \n', ' ')
                         output = output.replace(' * ', '')
 
-                        """Log the markdown output."""
+                        # Log the markdown output.
                         self.__log('_syncing %s..._ %s\n' %
                                    (remote_dir, output))
                         complete = True
