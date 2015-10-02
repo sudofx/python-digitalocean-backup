@@ -23,33 +23,20 @@ via source
 ##### Example backup script (backup.py):
 
 ```python
-import digitalocean
-from digitaloceanbackup import Backup
+from digitaloceanbackup import *
 
-"""Uncomment to disable logging for InsecurePlatformWarning"""
-"""
-import sys
-if sys.version_info[:3] < (2, 7, 9):
-    import logging
-    logging.captureWarnings(True)
-"""
-
-token = 'YOUR_TOKEN'
-rsync_excludes = ['cache', '.DS_Store', 'man3']
-remote_dirs = ['/home', '/var/log', '/var/www']
-
-manager = digitalocean.Manager(token=token)
-for droplet in manager.get_all_droplets():
+for droplet in DigitalOcean().droplets:
     Backup(
-        debug=False,  # print debug info so you can see shell commands
-        droplet=droplet,  # pass in a droplet obj
-        ssh_user='droplet_ssh_user',  # ssh user
-        ssh_key='droplet_ssh_key',  # ssh key file name or full path
-        remote_dirs=remote_dirs,  # remote directories to rsync
-        rsync_excludes=rsync_excludes,  # rsync excludes
-        snapshot_hour=3,  # hour of day to take snapshot
-        keep_snapshots=7  # keep this many snapshots
+        droplet=droplet,
+        ssh_user="root",
+        ssh_key="do_rsa",
+        remote_dirs=['/home', '/var/log', '/var/www'],
+        rsync_excludes=['cache', '.DS_Store', 'man3'],
+        snapshot_hour=2,
+        keep_snapshots=7,
+        debug=False
     )
+
 ```
 
 ##### Example hourly cron job:

@@ -15,7 +15,7 @@ except ImportError:
     from ConfigParser import ConfigParser
 
 # Backup your Digitalocean Droplets
-__version__ = '1.0.7'
+__version__ = '1.1.0'
 __author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
 __license__ = 'The MIT License (MIT)'
