@@ -9,6 +9,10 @@ import shlex
 import subprocess
 import logging
 import digitalocean
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
 
 # Backup your Digitalocean Droplets
 __version__ = '1.0.7'
@@ -16,6 +20,34 @@ __author__ = 'Rob Johnson ( https://corndogcomputers.com )'
 __author_email__ = 'info@corndogcomputers.com'
 __license__ = 'The MIT License (MIT)'
 __copyright__ = 'Copyright (c) 2015 Rob Johnson'
+
+
+class DigitalOcean(object):
+
+    def __init__(self, *args, **kwargs):
+        """
+            You can pass in the path to your digitalocean config file
+            that contains your token.
+            DigitalOcean(config="/path/to/config")
+
+            Config file example:
+
+            [digitalocean]
+            token = TOKEN
+        """
+
+        self.config = "%s/.digitalocean" % os.path.expanduser("~")
+        self.__dict__.update(kwargs)
+
+        config = ConfigParser()
+        try:
+            config.read(self.config)
+            token = config.get("digitalocean", "token")
+        except:
+            msg = "MISSING_CONFIG: %s\nEXAMPLE_CONFIG:\n\n[digitalocean]\ntoken = TOKEN\n" % (
+                self.config)
+            sys.exit(msg)
+        self.droplets = digitalocean.Manager(token=token).get_all_droplets()
 
 
 class Backup(object):

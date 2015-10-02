@@ -7,7 +7,6 @@
 .installed.cfg
 .project
 .pydevproject
-.virtualenvs
 dist
 build
 eggs
@@ -19,6 +18,5 @@ develop-eggs
 lib
 lib64
 pip-log.txt
-testing.py
 setup.cfg
 notes.txt
