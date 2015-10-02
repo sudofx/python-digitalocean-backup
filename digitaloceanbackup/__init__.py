@@ -8,6 +8,7 @@ import getpass
 import shlex
 import subprocess
 import logging
+import digitalocean
 
 # Backup your Digitalocean Droplets
 __version__ = '1.0.7'
@@ -18,18 +19,23 @@ __copyright__ = 'Copyright (c) 2015 Rob Johnson'
 
 
 class Backup(object):
-
-    # droplet: Droplet - droplet obj
-    # ssh_user: str - user for rsync connections when connecting to droplet
-    # ssh_key: str - ssh key file (full path/key_name) NO PASSWORD ACCESS
-    # remote_dirs: list() - list of directories to rsync from droplet to local
-    # rsync_excludes: list() - list of  rsync excludes
-    # snapshot_hour: int - the hour of day to create a snapshot
-    # keep_snapshots: int - number of backup snapshots to keep
-    # backup_dir: str - the local folder for your droplet backups
-    # delay: int - api delay between calls
+    """
+        Backup for digitalocean.
+    """
 
     def __init__(self, *args, **kwargs):
+        """
+            droplet: Droplet - droplet obj
+            ssh_user: str - user for rsync connections when connecting to droplet
+            ssh_key: str - ssh key file (full path/key_name) NO PASSWORD ACCESS
+            remote_dirs: list() - list of directories to rsync from droplet to local
+            rsync_excludes: list() - list of  rsync excludes
+            snapshot_hour: int - the hour of day to create a snapshot
+            keep_snapshots: int - number of backup snapshots to keep
+            backup_dir: str - the local folder for your droplet backups
+            delay: int - api delay between calls
+            debug: console logging
+        """
         self.success = None  # completion bool
         self.delay = 5  # delay between api calls
         self.ssh_user = ''  # ssh user name
