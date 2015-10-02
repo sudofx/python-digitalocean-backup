@@ -5,7 +5,7 @@
     <title>Python-digitalocean-backup by corndogcomputers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -51,7 +51,7 @@
 <h5>
 <a id="example-backup-script-backuppy" class="anchor" href="#example-backup-script-backuppy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example backup script (backup.py):</h5>
 
-<div class="highlight highlight-python"><pre><span class="pl-k">import</span> digitalocean
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> digitalocean
 <span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> Backup
 
 <span class="pl-s"><span class="pl-pds">"""</span>Uncomment to disable logging for InsecurePlatformWarning<span class="pl-pds">"""</span></span>
@@ -82,7 +82,7 @@ manager <span class="pl-k">=</span> digitalocean.Manager(<span class="pl-smi">to
 <h5>
 <a id="example-hourly-cron-job" class="anchor" href="#example-hourly-cron-job" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example hourly cron job:</h5>
 
-<div class="highlight highlight-sh"><pre>0 <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> /usr/bin/python /Users/username/bin/backup.py</pre></div>
+<div class="highlight highlight-source-shell"><pre>0 <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> /usr/bin/python /Users/username/bin/backup.py</pre></div>
 
 <h6>
 <a id="requires" class="anchor" href="#requires" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requires:</h6>
@@ -100,4 +100,3 @@ manager <span class="pl-k">=</span> digitalocean.Manager(<span class="pl-smi">to
   
   </body>
 </html>
-
