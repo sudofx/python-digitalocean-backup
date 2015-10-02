@@ -19,16 +19,15 @@ __copyright__ = 'Copyright (c) 2015 Rob Johnson'
 
 class Backup(object):
 
-    # Attributes accepted at creation time:
-    #     droplet: Droplet - droplet obj
-    #     ssh_user: str - user for rsync connections when connecting to droplet
-    #     ssh_key: str - ssh key file (full path/key_name) NO PASSWORD ACCESS
-    #     remote_dirs: list() - list of directories to rsync from droplet to local
-    #     rsync_excludes: list() - list of  rsync excludes
-    #     snapshot_hour: int - the hour of day to create a snapshot
-    #     keep_snapshots: int - number of backup snapshots to keep
-    #     backup_dir: str - the local folder for your droplet backups
-    #     delay: int - api delay between calls
+    # droplet: Droplet - droplet obj
+    # ssh_user: str - user for rsync connections when connecting to droplet
+    # ssh_key: str - ssh key file (full path/key_name) NO PASSWORD ACCESS
+    # remote_dirs: list() - list of directories to rsync from droplet to local
+    # rsync_excludes: list() - list of  rsync excludes
+    # snapshot_hour: int - the hour of day to create a snapshot
+    # keep_snapshots: int - number of backup snapshots to keep
+    # backup_dir: str - the local folder for your droplet backups
+    # delay: int - api delay between calls
 
     def __init__(self, *args, **kwargs):
         self.success = None  # completion bool
