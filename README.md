@@ -3,10 +3,12 @@
 This module works with [python-digitalocean](https://github.com/koalalorenzo/python-digitalocean) to allow you to rsync and snapshot your droplets with ease. **Great for hourly cron jobs!**
 
 ###### Works with posix (*nix, osx, cygwin)
-    Tested with Python 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)
+Tested with Python 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)
 
 
 ## How to install:
+
+[PyPI package](https://pypi.python.org/pypi/python-digitalocean-backup)
 
 via pip
 
@@ -16,9 +18,14 @@ via source
 
     python setup.py install
 
+##  
 
-##### PyPI package
-[https://pypi.python.org/pypi/python-digitalocean-backup](https://pypi.python.org/pypi/python-digitalocean-backup)
+##### *NEW*: Requires a config file to store your token in $HOME/.digitalocean
+
+```bash
+[digitalocean]
+token = YOUR_DIGITALOCEAN_TOKEN
+```
 
 ##### Example backup script (backup.py):
 
