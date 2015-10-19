@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Python-digitalocean-backup by corndogcomputers</title>
+    <title>Python-digitalocean-backup by sudofx</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -13,9 +13,9 @@
     <section class="page-header">
       <h1 class="project-name">Python-digitalocean-backup</h1>
       <h2 class="project-tagline">Python module that works with python-digitalocean to manage droplet backups.</h2>
-      <a href="https://github.com/corndogcomputers/python-digitalocean-backup" class="btn">View on GitHub</a>
-      <a href="https://github.com/corndogcomputers/python-digitalocean-backup/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/corndogcomputers/python-digitalocean-backup/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="https://github.com/sudofx/python-digitalocean-backup" class="btn">View on GitHub</a>
+      <a href="https://github.com/sudofx/python-digitalocean-backup/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/sudofx/python-digitalocean-backup/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
@@ -27,11 +27,12 @@
 <h6>
 <a id="works-with-posix-nix-osx-cygwin" class="anchor" href="#works-with-posix-nix-osx-cygwin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Works with posix (*nix, osx, cygwin)</h6>
 
-<pre><code>Tested with Python 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)
-</code></pre>
+<p>Tested with Python 2.7.8(CYGWIN), 2.7.9(OS X/Linux), 3.4.3(OS X/Linux)</p>
 
 <h2>
 <a id="how-to-install" class="anchor" href="#how-to-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to install:</h2>
+
+<p><a href="https://pypi.python.org/pypi/python-digitalocean-backup">PyPI package</a></p>
 
 <p>via pip</p>
 
@@ -44,40 +45,28 @@
 </code></pre>
 
 <h5>
-<a id="pypi-package" class="anchor" href="#pypi-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>PyPI package</h5>
+<a id="new-requires-a-config-file-to-store-your-token-in-homedigitalocean" class="anchor" href="#new-requires-a-config-file-to-store-your-token-in-homedigitalocean" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>NEW</em>: Requires a config file to store your token in $HOME/.digitalocean</h5>
 
-<p><a href="https://pypi.python.org/pypi/python-digitalocean-backup">https://pypi.python.org/pypi/python-digitalocean-backup</a></p>
+<div class="highlight highlight-source-shell"><pre>[digitalocean]
+token = YOUR_DIGITALOCEAN_TOKEN</pre></div>
 
 <h5>
 <a id="example-backup-script-backuppy" class="anchor" href="#example-backup-script-backuppy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example backup script (backup.py):</h5>
 
-<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> digitalocean
-<span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> Backup
+<div class="highlight highlight-source-python"><pre><span class="pl-k">from</span> digitaloceanbackup <span class="pl-k">import</span> <span class="pl-k">*</span>
 
-<span class="pl-s"><span class="pl-pds">"""</span>Uncomment to disable logging for InsecurePlatformWarning<span class="pl-pds">"""</span></span>
-<span class="pl-s"><span class="pl-pds">"""</span></span>
-<span class="pl-s">import sys</span>
-<span class="pl-s">if sys.version_info[:3] &lt; (2, 7, 9):</span>
-<span class="pl-s">    import logging</span>
-<span class="pl-s">    logging.captureWarnings(True)</span>
-<span class="pl-s"><span class="pl-pds">"""</span></span>
-
-token <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>YOUR_TOKEN<span class="pl-pds">'</span></span>
-rsync_excludes <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>cache<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>.DS_Store<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>man3<span class="pl-pds">'</span></span>]
-remote_dirs <span class="pl-k">=</span> [<span class="pl-s"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>/var/log<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>/var/www<span class="pl-pds">'</span></span>]
-
-manager <span class="pl-k">=</span> digitalocean.Manager(<span class="pl-smi">token</span><span class="pl-k">=</span>token)
-<span class="pl-k">for</span> droplet <span class="pl-k">in</span> manager.get_all_droplets():
+<span class="pl-k">for</span> droplet <span class="pl-k">in</span> DigitalOcean().droplets:
     Backup(
-        <span class="pl-smi">debug</span><span class="pl-k">=</span><span class="pl-c1">False</span>,  <span class="pl-c"># print debug info so you can see shell commands</span>
-        <span class="pl-smi">droplet</span><span class="pl-k">=</span>droplet,  <span class="pl-c"># pass in a droplet obj</span>
-        <span class="pl-smi">ssh_user</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>droplet_ssh_user<span class="pl-pds">'</span></span>,  <span class="pl-c"># ssh user</span>
-        <span class="pl-smi">ssh_key</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>droplet_ssh_key<span class="pl-pds">'</span></span>,  <span class="pl-c"># ssh key file name or full path</span>
-        <span class="pl-smi">remote_dirs</span><span class="pl-k">=</span>remote_dirs,  <span class="pl-c"># remote directories to rsync</span>
-        <span class="pl-smi">rsync_excludes</span><span class="pl-k">=</span>rsync_excludes,  <span class="pl-c"># rsync excludes</span>
-        <span class="pl-smi">snapshot_hour</span><span class="pl-k">=</span><span class="pl-c1">3</span>,  <span class="pl-c"># hour of day to take snapshot</span>
-        <span class="pl-smi">keep_snapshots</span><span class="pl-k">=</span><span class="pl-c1">7</span>  <span class="pl-c"># keep this many snapshots</span>
-    )</pre></div>
+        <span class="pl-smi">droplet</span><span class="pl-k">=</span>droplet,
+        <span class="pl-smi">ssh_user</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>root<span class="pl-pds">"</span></span>,
+        <span class="pl-smi">ssh_key</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>do_rsa<span class="pl-pds">"</span></span>,
+        <span class="pl-smi">remote_dirs</span><span class="pl-k">=</span>[<span class="pl-s"><span class="pl-pds">'</span>/home<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>/var/log<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>/var/www<span class="pl-pds">'</span></span>],
+        <span class="pl-smi">rsync_excludes</span><span class="pl-k">=</span>[<span class="pl-s"><span class="pl-pds">'</span>cache<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>.DS_Store<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>man3<span class="pl-pds">'</span></span>],
+        <span class="pl-smi">snapshot_hour</span><span class="pl-k">=</span><span class="pl-c1">2</span>,
+        <span class="pl-smi">keep_snapshots</span><span class="pl-k">=</span><span class="pl-c1">7</span>,
+        <span class="pl-smi">debug</span><span class="pl-k">=</span><span class="pl-c1">False</span>
+    )
+</pre></div>
 
 <h5>
 <a id="example-hourly-cron-job" class="anchor" href="#example-hourly-cron-job" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example hourly cron job:</h5>
@@ -90,7 +79,7 @@ manager <span class="pl-k">=</span> digitalocean.Manager(<span class="pl-smi">to
 <p><a href="https://github.com/koalalorenzo/python-digitalocean">python-digitalocean&gt;=1.5</a></p>
 
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/corndogcomputers/python-digitalocean-backup">Python-digitalocean-backup</a> is maintained by <a href="https://github.com/corndogcomputers">corndogcomputers</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/sudofx/python-digitalocean-backup">Python-digitalocean-backup</a> is maintained by <a href="https://github.com/sudofx">sudofx</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
